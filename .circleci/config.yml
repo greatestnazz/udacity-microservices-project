@@ -33,10 +33,10 @@ jobs:
             echo " ------- login in to hub--------"
             docker login -u greatestnazz -p $DOCKERPASS
             echo "-------------- Pushing images to dockerhub-------"
-            docker push greatestnazz/udagram-api-feed:v3
-            docker push greatestnazz/udagram-api-user:v3
-            docker push greatestnazz/udagram-frontend:v3
-            docker push greatestnazz/udagram-reverseproxy:v3
+            docker push greatestnazz/udagram-api-feed:v5
+            docker push greatestnazz/udagram-api-user:v5
+            docker push greatestnazz/udagram-frontend:v5
+            docker push greatestnazz/udagram-reverseproxy:v5
 workflows:
   default:
     jobs:
