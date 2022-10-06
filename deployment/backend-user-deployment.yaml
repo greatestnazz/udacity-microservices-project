@@ -14,15 +14,45 @@ spec:
     spec:
       containers:
       - name: backend-user
-        image: docker.io/newthingade/udagram-api-user:v3
+        image: docker.io/greatestnazz/udagram-api-user:v5
         ports:
         - containerPort: 80
         resources:
           limits:
-            cpu: 500m
+            cpu: 1000m
           requests:
-            cpu: 200m
-
+            cpu: 500m
+        env:
+          - name: URL
+            valueFrom:
+              configMapKeyRef:
+                name: env-configmap
+                key: URL 
+          - name: JWT_SECRET
+            valueFrom:
+              configMapKeyRef:
+                name: env-configmap
+                key: JWT_SECRET
+          - name: POSTGRESS_DB
+            valueFrom:
+              configMapKeyRef:
+                name: env-configmap
+                key: POSTGRESS_DB
+          - name: POSTGRESS_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: env-configmap
+                key: POSTGRESS_HOST
+          - name: POSTGRESS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: env-secret
+                key: POSTGRESS_PASSWORD
+          - name: POSTGRESS_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: env-secret
+                key: POSTGRESS_USERNAME
 
 ---
 apiVersion: v1

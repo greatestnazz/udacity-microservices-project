@@ -14,14 +14,15 @@ spec:
     spec:
       containers:
       - name: backend-feed
-        image: docker.io/newthingade/udagram-api-feed:v3
+        image: docker.io/greatestnazz/udagram-api-feed:v5
         ports:
         - containerPort: 80
         resources:
           limits:
-            cpu: 500m
+            cpu: 1000m
           requests:
-            cpu: 200m
+            cpu: 500m
+        
 
 ---
 apiVersion: v1
