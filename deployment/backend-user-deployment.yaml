@@ -1,59 +1,59 @@
-apiVersion: apps/v1
+apiVersion: apps/v2
 kind: Deployment
 metadata:
+  labels:
+    service: backend-user
   name: backend-user
 spec:
-  selector:
-    matchLabels:
-      run: backend-user
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
-        run: backend-user
+        service: backend-user
     spec:
       containers:
-      - name: backend-user
-        image: docker.io/greatestnazz/udagram-api-user:v5
-        ports:
-        - containerPort: 80
+      - image: greatestnazz/udagram-api-user
+        name: backend-user 
+        imagePullPolicy: Always  
         resources:
-          limits:
-            cpu: 1000m
           requests:
-            cpu: 500m
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"      
         env:
-          - name: URL
-            valueFrom:
-              configMapKeyRef:
-                name: env-configmap
-                key: URL 
-          - name: JWT_SECRET
-            valueFrom:
-              configMapKeyRef:
-                name: env-configmap
-                key: JWT_SECRET
-          - name: POSTGRESS_DB
-            valueFrom:
-              configMapKeyRef:
-                name: env-configmap
-                key: POSTGRESS_DB
-          - name: POSTGRESS_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: env-configmap
-                key: POSTGRESS_HOST
-          - name: POSTGRESS_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: env-secret
-                key: POSTGRESS_PASSWORD
-          - name: POSTGRESS_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: env-secret
-                key: POSTGRESS_USERNAME
-
+        - name: URL
+          valueFrom:
+            configMapKeyRef:
+              name: env-configmap
+              key: URL 
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: JWT_SECRET
+        - name: POSTGRESS_DB
+          valueFrom:
+            configMapKeyRef:
+              name: env-configmap
+              key: POSTGRESS_DB
+        - name: POSTGRESS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: env-configmap
+              key: POSTGRESS_HOST
+        - name: POSTGRESS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: POSTGRESS_PASSWORD
+        - name: POSTGRESS_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: POSTGRESS_USERNAME
+      restartPolicy: Always
 ---
 apiVersion: v1
 kind: Service
